@@ -1,22 +1,27 @@
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
+from rest_framework import generics
 
-from api.serializers import UserSerializer, PostSerializer, CommentSerializer
+from api         import serializers
 from blog.models import Post, Comment
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = serializers.UserSerializer
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostListAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    
+    serializer_class = serializers.PostListSerializer
 
-class CommentViewSet(viewsets.ModelViewSet):
+
+class PostRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = serializers.PostRetrieveSerializer
+
+
+class CommentCreateAPIView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    
+    serializer_class = serializers.CommentSerializer

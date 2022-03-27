@@ -2,14 +2,15 @@ from django.urls import path, include
 
 from rest_framework import routers
 
-from api.views import UserViewSet, PostViewSet, CommentViewSet
+from api import views
 
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'posts', PostViewSet)
-router.register(r'comments', CommentViewSet)
+router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('posts/', views.PostListAPIView.as_view(), name='post-list'),
+    path('posts/<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-detail'),
+    path('comments/', views.CommentCreateAPIView.as_view(), name='comment-create'),
 ]
