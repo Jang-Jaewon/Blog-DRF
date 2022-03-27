@@ -12,5 +12,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('posts/', views.PostListAPIView.as_view(), name='post-list'),
     path('posts/<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-detail'),
+    path('posts/<int:pk>/like/', views.PostLikeAPIView.as_view(), name='post-like'),
     path('comments/', views.CommentCreateAPIView.as_view(), name='comment-create'),
 ]
