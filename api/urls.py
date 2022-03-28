@@ -14,4 +14,5 @@ urlpatterns = [
     path('posts/<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-detail'),
     path('posts/<int:pk>/like/', views.PostLikeAPIView.as_view(), name='post-like'),
     path('comments/', views.CommentCreateAPIView.as_view(), name='comment-create'),
+    path('catetag/', views.CateTagAPIView.as_view(), name='catetag'),
 ]
