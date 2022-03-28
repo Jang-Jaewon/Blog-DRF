@@ -5,7 +5,7 @@ from rest_framework          import generics
 from rest_framework          import views
 from rest_framework.response import Response
 
-from api         import serializers
+from api         import serializers, pagination
 from blog.models import Post, Comment, Category, Tag
 
 
@@ -17,6 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostListAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostListSerializer
+    pagination_class = pagination.PostPageNumberPagination
 
 
 class PostRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -50,4 +51,3 @@ class CateTagAPIView(views.APIView):
         
         serializer = serializers.CateTagSerializer(instance=data)
         return Response(serializer.data)
-    
