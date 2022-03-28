@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from blog.models import Post, Comment, Category, Tag
+from blog.models import Post, Comment
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -26,12 +26,6 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-
-
-class PostLikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['like']
 
 
 class CateTagSerializer(serializers.Serializer):
