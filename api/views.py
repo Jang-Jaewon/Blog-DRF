@@ -27,9 +27,39 @@ class PostListAPIView(generics.ListCreateAPIView):
         }
 
 
+# class PostRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = serializers.PostRetrieveSerializer
+
+
+def get_prev_next_instance(instance):
+    try:
+        prev_intance = instance.get_previous_by_update_dt()
+    except instance.DoesNotExist:
+        prev_intance = None
+    try:
+        next_intance = instance.get_next_by_update_dt()
+    except instance.DoesNotExist:
+        next_intance = None
+    return prev_intance, next_intance
+        
+        
 class PostRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer_class = serializers.PostRetrieveSerializer
+    serializer_class = serializers.PostDetailSerializer
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance     = self.get_object()
+        prevInstance, nextInstance = get_prev_next_instance(instance)
+        commentList  = instance.comment_set.all()
+        data = {
+            'post'        : instance,
+            'prevPost'    : prevInstance,
+            'nextPost'    : nextInstance,
+            'commentlist' : commentList,
+        }
+        serializer = self.get_serializer(instance=data)
+        return Response(serializer.data)
 
 
 class CommentCreateAPIView(generics.ListCreateAPIView):
