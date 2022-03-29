@@ -10,9 +10,9 @@ router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('posts/', views.PostListAPIView.as_view(), name='post-list'),
-    path('posts/<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-detail'),
-    path('posts/<int:pk>/like/', views.PostLikeAPIView.as_view(), name='post-like'),
-    path('comments/', views.CommentCreateAPIView.as_view(), name='comment-create'),
+    path('posts/', views.PostViewSet.as_view(actions={'get' : 'list', 'post' : 'create'}), name='post-list'),
+    path('posts/<int:pk>/', views.PostViewSet.as_view(actions={'get' : 'retrieve', 'patch' : 'partial_update', 'delete' : 'destroy'}), name='post-detail'),
+    path('posts/<int:pk>/like/', views.PostViewSet.as_view(actions={'get' : 'like',}), name='post-like'),
+    path('comments/', views.CommentViewSet.as_view(actions={'get' : 'list', 'post' : 'create'}), name='comment-create'),
     path('catetag/', views.CateTagAPIView.as_view(), name='catetag'),
 ]
