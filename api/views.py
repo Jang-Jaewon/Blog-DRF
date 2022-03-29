@@ -60,6 +60,13 @@ class PostRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
         }
         serializer = self.get_serializer(instance=data)
         return Response(serializer.data)
+    
+    def get_serializer_context(self):
+        return {
+            'request': None,
+            'format': self.format_kwarg,
+            'view': self
+        }
 
 
 class CommentCreateAPIView(generics.ListCreateAPIView):
